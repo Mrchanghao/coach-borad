@@ -7,9 +7,10 @@
 
 // Needed for redux-saga es6 generator support
 import '@babel/polyfill';
-
+import 'semantic-ui-css/semantic.min.css';
+// import 'file-loader?name=.htaccess!./.htaccess';
 // Import all the third party stuff
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
@@ -17,9 +18,12 @@ import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
+// import css
+import './app.css';
+
 // Import root app
 import App from 'containers/App';
-
+import { ThemeProvider } from 'styled-components';
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
@@ -28,10 +32,10 @@ import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 
 import configureStore from './configureStore';
-
+import { configureStyle } from './utils/configureStyle';
 // Import i18n messages
 import { translationMessages } from './i18n';
-
+import GlobalStyle from './global-styles';
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
@@ -51,7 +55,12 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <ThemeProvider theme={configureStyle()}>
+            <Fragment>
+              <GlobalStyle />
+              <App />
+            </Fragment>
+          </ThemeProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,
