@@ -9,10 +9,16 @@ const selectGlobal = state => state.global || initialState;
 
 const selectRouter = state => state.router;
 
-const makeSelectCurrentUser = () =>
+const makeSelectPathName = () =>
+  createSelector(
+    selectRouter,
+    routerState => routerState.location.pathname,
+  );
+
+const makeSelectIdToken = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.currentUser,
+    globalState => globalState.userData.idToken,
   );
 
 const makeSelectLoading = () =>
@@ -27,11 +33,35 @@ const makeSelectError = () =>
     globalState => globalState.error,
   );
 
-const makeSelectRepos = () =>
+const makeSelectUser = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.userData.repositories,
+    globalState => globalState.userData.user,
   );
+const makeSelectUserAccessGroup = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.userData.user.group.access,
+  );
+const makeSelectEmail = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.email,
+);
+const makeSelectFirstName = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.first_name,
+);
+const makeSelectLastName = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.last_name,
+);
+
+const makeSelectFullName = createSelector(
+  makeSelectFirstName,
+  makeSelectLastName,
+  (firstName, lastName) =>
+    `${lastName}${firstName}`.length > 0 ? `${lastName}${firstName}` : '회원님',
+);
 
 const makeSelectLocation = () =>
   createSelector(
@@ -41,9 +71,13 @@ const makeSelectLocation = () =>
 
 export {
   selectGlobal,
-  makeSelectCurrentUser,
+  makeSelectUser,
   makeSelectLoading,
+  makeSelectIdToken,
   makeSelectError,
-  makeSelectRepos,
+  makeSelectPathName,
+  makeSelectUserAccessGroup,
+  makeSelectEmail,
+  makeSelectFullName,
   makeSelectLocation,
 };

@@ -8,39 +8,73 @@
  */
 
 import produce from 'immer';
-import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
+import {
+  CLIENT_SET,
+  CLIENT_UNSET,
+  FETCH_USER_REQUESTING,
+  FETCH_USER_REQUESTING_FAIL,
+  FETCH_USER_REQUESTING_SUCCESS,
+  TRY_CREATE_PUSHER_INSTANCE_SUCCESS,
+  TRY_CREATE_PUSHER_INSTANCE_FAIL,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   loading: false,
   error: false,
-  currentUser: false,
   userData: {
-    repositories: false,
+    user: {
+      id: null,
+      email: null,
+      username: null,
+      isChatAvailable: null,
+      first_name: null,
+      last_name: null,
+      has_popup: false,
+      profile: {
+        cellphone: '',
+        school: '',
+        department: '',
+        date_of_birth: '',
+      },
+      group: {
+        access: null,
+      },
+    },
+    idToken: null,
   },
+  pusherInstance: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const appReducer = (state = initialState, action) =>
+const globalReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case LOAD_REPOS:
+      case FETCH_USER_REQUESTING:
         draft.loading = true;
+        break;
+      case FETCH_USER_REQUESTING_SUCCESS:
+        draft.loading = false;
+        break;
+      case FETCH_USER_REQUESTING_FAIL:
+        draft.loading = false;
+        break;
+      case CLIENT_SET:
         draft.error = false;
-        draft.userData.repositories = false;
+        draft.userData.idToken = action.idToken;
+        draft.userData = action.user;
         break;
-
-      case LOAD_REPOS_SUCCESS:
-        draft.userData.repositories = action.repos;
+      case CLIENT_UNSET:
         draft.loading = false;
-        draft.currentUser = action.username;
+        draft.userData = initialState.userData;
         break;
-
-      case LOAD_REPOS_ERROR:
-        draft.error = action.error;
-        draft.loading = false;
+      case TRY_CREATE_PUSHER_INSTANCE_SUCCESS:
+        draft.pusherInstance = action.pusherInstance;
+        break;
+      case TRY_CREATE_PUSHER_INSTANCE_FAIL:
+        draft.pusherInstance = null;
         break;
     }
   });
 
-export default appReducer;
+export default globalReducer;

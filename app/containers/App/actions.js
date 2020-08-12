@@ -19,14 +19,67 @@ import {
   CLIENT_UNSET,
   FETCH_USER_REQUESTING,
   FETCH_USER_REQUESTING_SUCCESS,
-  UPDATE_USER_INFO,
   FETCH_USER_REQUESTING_FAIL,
+  REDIRECT_TO_LOGIN_REQUEST,
+  TRY_CREATE_PUSHER_INSTANCE,
 } from './constants';
+
+/**
+ * Dispatched when [ user hit F5 ] or [ user try to login ]
+ *
+ * @return {object}       An action object with a type of CLIENT_UNSET
+ */
 
 export function setClient({ idToken, user }) {
   return {
     type: CLIENT_SET,
     user,
     idToken,
+  };
+}
+
+export function unSetClient() {
+  localStorage.removeItem('alpsCoach.idToken');
+  return {
+    type: CLIENT_UNSET,
+  };
+}
+
+/**
+ * Dispatched when [ user hit F5 ] or [ user try to login ]
+ *
+ * @return {object}       An action object with a type of CLIENT_UNSET
+ */
+export function fetchUserAction({ idToken }) {
+  return {
+    type: FETCH_USER_REQUESTING,
+    idToken,
+  };
+}
+export function fetchUserFailAction({ idToken }) {
+  return {
+    type: FETCH_USER_REQUESTING_FAIL,
+    idToken,
+  };
+}
+export function fetchUserSuccessAction({ idToken }) {
+  return {
+    type: FETCH_USER_REQUESTING_SUCCESS,
+    idToken,
+  };
+}
+
+export function requestRedirectToLogin(prevPage) {
+  return {
+    type: REDIRECT_TO_LOGIN_REQUEST,
+    prevPage,
+  };
+}
+
+export function tryCreatePusherInstanceAction({ email, pusherInstance }) {
+  return {
+    type: TRY_CREATE_PUSHER_INSTANCE,
+    email,
+    pusherInstance,
   };
 }

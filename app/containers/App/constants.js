@@ -9,9 +9,9 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
-export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
-export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
+// export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
+// export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
+// export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
 
 /**
  *    Login
@@ -38,6 +38,12 @@ export const UPDATE_USER_INFO = 'board/App/UPDATE_USER_INFO';
 /**
  * PopUp
  */
+export const ACTIVATE_POP_UP = 'board/App/ACTIVATE_POP_UP';
+export const DEACTIVATE_POP_UP = 'board/App/DEACTIVATE_POP_UP';
+
+export const FETCH_POPUP_LIST_REQUEST = 'board/App/FETCH_POPUP_LIST_REQUEST';
+export const FETCH_POPUP_LIST_SUCCESS = 'board/App/FETCH_POPUP_LIST_SUCCESS';
+export const FETCH_POPUP_LIST_FAIL = 'board/App/FETCH_POPUP_LIST_FAIL';
 
 /**
  *    pusher

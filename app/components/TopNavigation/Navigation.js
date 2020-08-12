@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import MenuList from './MenuList';
 import { Wrapper, LogoWrapper, LogoImg } from './styles';
-import Logo from './logo_blue.png';
+import Logo from './Logo_alps.svg';
 
 const Navigation = ({ email, fullName }) => (
   <Wrapper>

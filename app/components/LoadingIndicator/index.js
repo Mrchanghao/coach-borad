@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import Circle from './Circle';
+import { BeatLoader } from 'react-spinners';
 import Wrapper from './Wrapper';
 
-const LoadingIndicator = () => (
-  <Wrapper>
-    <Circle />
-    <Circle rotate={30} delay={-1.1} />
-    <Circle rotate={60} delay={-1} />
-    <Circle rotate={90} delay={-0.9} />
-    <Circle rotate={120} delay={-0.8} />
-    <Circle rotate={150} delay={-0.7} />
-    <Circle rotate={180} delay={-0.6} />
-    <Circle rotate={210} delay={-0.5} />
-    <Circle rotate={240} delay={-0.4} />
-    <Circle rotate={270} delay={-0.3} />
-    <Circle rotate={300} delay={-0.2} />
-    <Circle rotate={330} delay={-0.1} />
-  </Wrapper>
-);
+const CircularLoadingIndicator = ({ size, inverted }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
 
-export default LoadingIndicator;
+  return (
+    <Wrapper>
+      <BeatLoader
+        size={size}
+        color={inverted ? '#ffffff' : '#293b5a'}
+        loading={loading}
+      />
+    </Wrapper>
+  );
+};
+
+CircularLoadingIndicator.propTypes = {
+  size: PropTypes.number.isRequired,
+  inverted: PropTypes.bool,
+};
+
+export default CircularLoadingIndicator;

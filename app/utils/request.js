@@ -1,3 +1,9 @@
+import axios from 'axios';
+import { API_URL } from './constants';
+
+function getIdToken() {
+  return localStorage.getItem('alpsCoach.idToken');
+}
 /**
  * Parses the JSON returned by a network request
  *
@@ -37,8 +43,37 @@ function checkStatus(response) {
  *
  * @return {object}           The response data
  */
-export default function request(url, options) {
-  return fetch(url, options)
+export function getRequest({ url }) {
+  const idToken = getIdToken();
+  const options = {
+    url: `${API_URL + url}`,
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Client-hostname': `${window.location.hostname}`,
+      Authorization: `JWT ${idToken}`,
+    },
+  };
+  return axios(options)
+    .then(checkStatus)
+    .then(parseJSON);
+}
+
+export function postRequest({ url, data }) {
+  const idToken = getIdToken();
+  const options = {
+    method: 'POST',
+    url: API_URL + url,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Client-hostname': `${window.location.hostname}`,
+      Authorization: `JWT ${idToken}`,
+    },
+    data: { ...data },
+  };
+  return axios(options)
     .then(checkStatus)
     .then(parseJSON);
 }
