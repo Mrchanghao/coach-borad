@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
 export const MenuWrapper = styled.ul`
   margin: 0;
   padding: 0;
+  background-color: red;
 `;
 
 export const MenuTitle = styled.p`

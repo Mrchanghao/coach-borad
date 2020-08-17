@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { RELEASE_VERSION } from 'utils/constants';
 
 import {
   makeSelectUserAccessGroup,
@@ -20,6 +21,22 @@ const SideNavigation = ({ accessGroup, curPathname, idToken }) => (
       curPathname={curPathname}
       idToken={idToken}
     />
+    <div
+      style={{
+        display: 'flex',
+        marginBottom: 8,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: '#aaaaaa',
+        fontSize: '10px',
+      }}
+    >
+      <p style={{ margin: 0 }}>© Algorithm</p>
+      <p style={{ marginBottom: 5 }}>LABS</p>
+      <p>{RELEASE_VERSION}</p>
+    </div>
   </Wrapper>
 );
 

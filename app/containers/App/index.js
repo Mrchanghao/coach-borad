@@ -54,7 +54,7 @@ const AppConentWrapper = styled.div`
 
 function App({ email, fullName, onRefreshPage }) {
   useInjectSaga({ key, saga });
-
+  //
   useEffect(() => {
     if (window.location.pathname !== '/logout') {
       onRefreshPage();

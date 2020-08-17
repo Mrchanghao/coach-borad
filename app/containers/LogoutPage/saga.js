@@ -8,6 +8,6 @@ function* logoutSaga() {
   yield put(replace('/login'));
 }
 
-export function* rootSaga() {
+export default function* rootSaga() {
   yield all([takeLatest(LOGOUT_REQUESTING, logoutSaga)]);
 }
