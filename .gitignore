@@ -8,5 +8,5 @@ stats.json
 .DS_Store
 npm-debug.log
 .idea
-
+utils/constants.js
 .env
