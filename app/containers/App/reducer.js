@@ -62,7 +62,7 @@ const globalReducer = (state = initialState, action) =>
       case CLIENT_SET:
         draft.error = false;
         draft.userData.idToken = action.idToken;
-        draft.userData = action.user;
+        draft.userData.user = action.user;
         break;
       case CLIENT_UNSET:
         draft.loading = false;

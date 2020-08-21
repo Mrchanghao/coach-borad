@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL } from './constants';
+import { API_URL } from 'utils/constants';
 
 function getIdToken() {
   return localStorage.getItem('alpsCoach.idToken');
@@ -15,7 +15,7 @@ function parseJSON(response) {
   if (response.status === 204 || response.status === 205) {
     return null;
   }
-  return response.json();
+  return response.data;
 }
 
 /**
@@ -46,7 +46,6 @@ function checkStatus(response) {
 export function getRequest({ url }) {
   const idToken = getIdToken();
   const options = {
-    url: `${API_URL + url}`,
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -54,6 +53,7 @@ export function getRequest({ url }) {
       'Client-hostname': `${window.location.hostname}`,
       Authorization: `JWT ${idToken}`,
     },
+    url: `${API_URL + url}`,
   };
   return axios(options)
     .then(checkStatus)

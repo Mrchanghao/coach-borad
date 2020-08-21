@@ -10,7 +10,7 @@ import '@babel/polyfill';
 import 'semantic-ui-css/semantic.min.css';
 // import 'file-loader?name=.htaccess!./.htaccess';
 // Import all the third party stuff
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
@@ -34,7 +34,7 @@ import configureStore from './configureStore';
 import { configureStyle } from './utils/configureStyle';
 // Import i18n messages
 import { translationMessages } from './i18n';
-import GlobalStyle from './global-styles';
+// import GlobalStyle from './global-styles';
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
@@ -48,17 +48,14 @@ openSansObserver.load().then(() => {
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
-
+const theme = configureStyle();
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <ThemeProvider theme={configureStyle()}>
-            <Fragment>
-              <GlobalStyle />
-              <App />
-            </Fragment>
+          <ThemeProvider theme={theme}>
+            <App />
           </ThemeProvider>
         </ConnectedRouter>
       </LanguageProvider>
