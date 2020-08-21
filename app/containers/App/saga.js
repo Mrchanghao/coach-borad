@@ -14,7 +14,7 @@ import {
   TRY_CREATE_PUSHER_INSTANCE_ALREADY_EXIST,
   TRY_CREATE_PUSHER_INSTANCE_FAIL,
   TRY_CREATE_PUSHER_INSTANCE_SUCCESS,
-  CLIENT_UNSET,
+  // CLIENT_UNSET,
 } from './constants';
 // 1. LoginPage.saga에서 _idToken을 직접 주입하여 fetchUserFlow 호출
 // 2. 새로고침시 App.js에서 _idToken이 없는 채로 fetchUserFlow 호출
@@ -29,7 +29,7 @@ export function* fetchUserFlow(_idToken) {
     user = yield call(getRequest, { url });
     yield put(setClient({ idToken, user }));
     yield put({ type: FETCH_USER_REQUESTING_SUCCESS });
-
+    console.log(user);
     yield put({
       type: TRY_CREATE_PUSHER_INSTANCE,
       email: user.email,
@@ -47,18 +47,16 @@ export function* fetchUserFlow(_idToken) {
   return user;
 }
 
-export function* loginPageToRedirect(action) {
+export function* loginPageRedirect(action) {
   const { prevPage } = action;
   const next = encodeURIComponent(prevPage);
-
-  yield put(push(`/login?${next}=${next}`));
+  yield put(push(`/login?next=${next}`));
   yield put({ type: REDIRECT_TO_LOGIN_SUCCESS });
 }
 
 export function* fetchUserWatcher() {
   while (true) {
     const { idToken } = yield take(FETCH_USER_REQUESTING);
-    console.log(idToken);
     // export function fetchUserAction({ idToken }) {
     //   return {
     //     type: FETCH_USER_REQUESTING,
@@ -99,7 +97,7 @@ export function* createPusherInstacneSaga(action) {
 export default function* rootSaga() {
   yield all([
     fetchUserWatcher(),
-    takeLatest(REDIRECT_TO_LOGIN_REQUEST, loginPageToRedirect),
+    takeLatest(REDIRECT_TO_LOGIN_REQUEST, loginPageRedirect),
     takeLatest(TRY_CREATE_PUSHER_INSTANCE, createPusherInstacneSaga),
     // takeLatest(CLIENT_UNSET, unSetClientSaga),
   ]);

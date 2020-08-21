@@ -6,7 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
@@ -16,6 +16,8 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+
 import { createStructuredSelector } from 'reselect';
 
 import TopNavigation from 'components/TopNavigation';
@@ -27,6 +29,8 @@ import { fetchUserAction } from './actions';
 // component
 // saga
 import saga from './saga';
+import reducer from './reducer';
+
 // selectors
 import { makeSelectFullName, makeSelectEmail } from './selectors';
 
@@ -53,7 +57,9 @@ const AppConentWrapper = styled.div`
 `;
 
 function App({ email, fullName, onRefreshPage }) {
+  useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
   //
   useEffect(() => {
     if (window.location.pathname !== '/logout') {
@@ -110,4 +116,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(App);
+export default compose(
+  withConnect,
+  memo,
+)(App);

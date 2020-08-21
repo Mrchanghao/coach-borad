@@ -47,7 +47,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const globalReducer = (state = initialState, action) =>
+const appReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case FETCH_USER_REQUESTING:
@@ -77,4 +77,4 @@ const globalReducer = (state = initialState, action) =>
     }
   });
 
-export default globalReducer;
+export default appReducer;

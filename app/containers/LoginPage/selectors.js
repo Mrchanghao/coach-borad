@@ -3,7 +3,7 @@ import { initialState } from './reducers';
 
 const selectLogin = state => state.login || initialState;
 
-const selectApp = state => state.global;
+const selectApp = state => state.app;
 const makeSelectUsername = () =>
   createSelector(
     selectLogin,
@@ -13,7 +13,7 @@ const makeSelectUsername = () =>
 const makeSelectEmail = () =>
   createSelector(
     selectApp,
-    globalState => globalState.userData.user.email,
+    appState => appState.userData.user.email,
   );
 
 const makeSelectLoading = () =>

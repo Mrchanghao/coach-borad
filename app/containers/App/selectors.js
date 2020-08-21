@@ -5,7 +5,7 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectGlobal = state => state.global || initialState;
+const selectApp = state => state.app || { ...initialState };
 
 const selectRouter = state => state.router;
 
@@ -14,46 +14,51 @@ const makeSelectPathName = () =>
     selectRouter,
     routerState => routerState.location.pathname,
   );
+// const makeSelectUserData = () =>
+//   createSelector(
+//     selectApp,
+//     appState => appState.userData,
+//   );
 
 const makeSelectIdToken = () =>
   createSelector(
-    selectGlobal,
-    globalState => globalState.userData.idToken,
+    selectApp,
+    appState => appState.userData.idToken,
   );
 
 const makeSelectLoading = () =>
   createSelector(
-    selectGlobal,
-    globalState => globalState.loading,
+    selectApp,
+    appState => appState.loading,
   );
 
 const makeSelectError = () =>
   createSelector(
-    selectGlobal,
-    globalState => globalState.error,
+    selectApp,
+    appState => appState.error,
   );
 
 const makeSelectUser = () =>
   createSelector(
-    selectGlobal,
-    globalState => globalState.userData.user,
+    selectApp,
+    appState => appState.userData.user,
   );
 const makeSelectUserAccessGroup = () =>
   createSelector(
-    selectGlobal,
-    globalState => globalState.userData.user.group.access,
+    selectApp,
+    appState => appState.userData.user.group.access,
   );
 const makeSelectEmail = createSelector(
-  selectGlobal,
-  globalState => globalState.userData.user.email,
+  selectApp,
+  appState => appState.userData.user.email,
 );
 const makeSelectFirstName = createSelector(
-  selectGlobal,
-  globalState => globalState.userData.user.first_name,
+  selectApp,
+  appState => appState.userData.user.first_name,
 );
 const makeSelectLastName = createSelector(
-  selectGlobal,
-  globalState => globalState.userData.user.last_name,
+  selectApp,
+  appState => appState.userData.user.last_name,
 );
 
 const makeSelectFullName = createSelector(
@@ -70,7 +75,7 @@ const makeSelectLocation = () =>
   );
 
 export {
-  selectGlobal,
+  selectApp,
   makeSelectUser,
   makeSelectLoading,
   makeSelectIdToken,

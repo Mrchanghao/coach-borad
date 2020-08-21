@@ -64,7 +64,7 @@ export function postRequest({ url, data }) {
   const idToken = getIdToken();
   const options = {
     method: 'POST',
-    url: API_URL + url,
+    url: `${API_URL + url}`,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
