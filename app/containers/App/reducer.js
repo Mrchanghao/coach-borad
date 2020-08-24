@@ -47,16 +47,16 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const appReducer = (state = initialState, action) =>
+const globalReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case FETCH_USER_REQUESTING:
         draft.loading = true;
         break;
-      case FETCH_USER_REQUESTING_SUCCESS:
+      case FETCH_USER_REQUESTING_FAIL:
         draft.loading = false;
         break;
-      case FETCH_USER_REQUESTING_FAIL:
+      case FETCH_USER_REQUESTING_SUCCESS:
         draft.loading = false;
         break;
       case CLIENT_SET:
@@ -77,4 +77,4 @@ const appReducer = (state = initialState, action) =>
     }
   });
 
-export default appReducer;
+export default globalReducer;

@@ -20,7 +20,7 @@ import {
 // 2. 새로고침시 App.js에서 _idToken이 없는 채로 fetchUserFlow 호출
 
 export function* fetchUserFlow(_idToken) {
-  const sessionToken = localStorage.getItem('alpsCoach.idtoken');
+  const sessionToken = localStorage.getItem('alpsCoach.idToken');
   const idToken = _idToken || sessionToken;
   let user;
   try {
@@ -29,7 +29,6 @@ export function* fetchUserFlow(_idToken) {
     user = yield call(getRequest, { url });
     yield put(setClient({ idToken, user }));
     yield put({ type: FETCH_USER_REQUESTING_SUCCESS });
-    console.log(user);
     yield put({
       type: TRY_CREATE_PUSHER_INSTANCE,
       email: user.email,
@@ -56,13 +55,8 @@ export function* loginPageRedirect(action) {
 
 export function* fetchUserWatcher() {
   while (true) {
+    // eslint-disable-line no-constant-condition
     const { idToken } = yield take(FETCH_USER_REQUESTING);
-    // export function fetchUserAction({ idToken }) {
-    //   return {
-    //     type: FETCH_USER_REQUESTING,
-    //     idToken,
-    //   };
-    // }
     yield fork(fetchUserFlow, idToken);
   }
 }

@@ -7,7 +7,7 @@ import { connectRouter } from 'connected-react-router';
 import { DEPLOYED } from 'utils/constants';
 
 import history from 'utils/history';
-// import globalReducer from 'containers/App/reducer';
+import globalReducer from 'containers/App/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 
 function checkUpdate() {
@@ -22,6 +22,7 @@ function checkUpdate() {
 export default function createReducer(injectedReducers = {}) {
   checkUpdate();
   const rootReducer = combineReducers({
+    global: globalReducer,
     language: languageProviderReducer,
     router: connectRouter(history),
     ...injectedReducers,

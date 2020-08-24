@@ -5,68 +5,8 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectApp = state => state.app || { ...initialState };
-
+const selectGlobal = state => state.global || initialState;
 const selectRouter = state => state.router;
-
-const makeSelectPathName = () =>
-  createSelector(
-    selectRouter,
-    routerState => routerState.location.pathname,
-  );
-// const makeSelectUserData = () =>
-//   createSelector(
-//     selectApp,
-//     appState => appState.userData,
-//   );
-
-const makeSelectIdToken = () =>
-  createSelector(
-    selectApp,
-    appState => appState.userData.idToken,
-  );
-
-const makeSelectLoading = () =>
-  createSelector(
-    selectApp,
-    appState => appState.loading,
-  );
-
-const makeSelectError = () =>
-  createSelector(
-    selectApp,
-    appState => appState.error,
-  );
-
-const makeSelectUser = () =>
-  createSelector(
-    selectApp,
-    appState => appState.userData.user,
-  );
-const makeSelectUserAccessGroup = () =>
-  createSelector(
-    selectApp,
-    appState => appState.userData.user.group.access,
-  );
-const makeSelectEmail = createSelector(
-  selectApp,
-  appState => appState.userData.user.email,
-);
-const makeSelectFirstName = createSelector(
-  selectApp,
-  appState => appState.userData.user.first_name,
-);
-const makeSelectLastName = createSelector(
-  selectApp,
-  appState => appState.userData.user.last_name,
-);
-
-const makeSelectFullName = createSelector(
-  makeSelectFirstName,
-  makeSelectLastName,
-  (firstName, lastName) =>
-    `${lastName}${firstName}`.length > 0 ? `${lastName}${firstName}` : '회원님',
-);
 
 const makeSelectLocation = () =>
   createSelector(
@@ -74,15 +14,63 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
+const makeSelectPathname = () =>
+  createSelector(
+    selectRouter,
+    routerState => routerState.location.pathname,
+  );
+
+const makeSelectIdToken = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.userData.idToken,
+  );
+
+const makeSelectUserLoading = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.loading,
+  );
+const makeSelectUser = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.userData.user,
+  );
+const makeSelectUserAccessGroup = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.userData.user.group.access,
+  );
+const makeSelectEmail = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.email,
+);
+const makeSelectFirstName = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.first_name,
+);
+const makeSelectLastName = createSelector(
+  selectGlobal,
+  globalState => globalState.userData.user.last_name,
+);
+
+const makeSelectFullName = createSelector(
+  makeSelectLastName,
+  makeSelectFirstName,
+  (lastName, firstName) =>
+    `${lastName}${firstName}`.length > 0
+      ? `${lastName}${firstName}`
+      : 'this is fullname',
+);
+
 export {
-  selectApp,
-  makeSelectUser,
-  makeSelectLoading,
+  selectGlobal,
   makeSelectIdToken,
-  makeSelectError,
-  makeSelectPathName,
-  makeSelectUserAccessGroup,
-  makeSelectEmail,
-  makeSelectFullName,
+  makeSelectUser,
+  makeSelectUserLoading,
   makeSelectLocation,
+  makeSelectFullName,
+  makeSelectEmail,
+  makeSelectUserAccessGroup,
+  makeSelectPathname,
 };

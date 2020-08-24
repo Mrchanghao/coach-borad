@@ -16,7 +16,6 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
 
 import { createStructuredSelector } from 'reselect';
 
@@ -24,12 +23,12 @@ import TopNavigation from 'components/TopNavigation';
 import SideNavigation from 'components/SideNavigation';
 import LoginPage from 'containers/LoginPage';
 import LogoutPage from 'containers/LogoutPage';
+import ClassManagementPage from 'containers/ClassManagementPage';
 // action
 import { fetchUserAction } from './actions';
 // component
 // saga
 import saga from './saga';
-import reducer from './reducer';
 
 // selectors
 import { makeSelectFullName, makeSelectEmail } from './selectors';
@@ -57,7 +56,6 @@ const AppConentWrapper = styled.div`
 `;
 
 function App({ email, fullName, onRefreshPage }) {
-  useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   //
@@ -66,7 +64,6 @@ function App({ email, fullName, onRefreshPage }) {
       onRefreshPage();
     }
   }, []);
-
   return (
     <AppWrapper>
       <Helmet
@@ -75,11 +72,12 @@ function App({ email, fullName, onRefreshPage }) {
       >
         <meta name="description" content="COACH dash board clone" />
       </Helmet>
-      <TopNavigation email={email} fullname={fullName} />
+      <TopNavigation email={email} fullName={fullName} />
       <SideNavigation />
       <AppConentWrapper>
         <Switch>
           <Route exact path="/" render={() => <h1>hi?</h1>} />
+          <Route path="/my-class/:manageType" component={ClassManagementPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/logout" component={LogoutPage} />
         </Switch>

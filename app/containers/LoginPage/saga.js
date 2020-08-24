@@ -20,7 +20,6 @@ function* loginFlow(action) {
     const url = '/account/token/obtain/';
     const data = { email, password };
     idToken = yield call(postRequest, { url, data });
-    console.log(idToken);
     yield localStorage.setItem('alpsCoach.idToken', idToken.token);
     yield fetchUserFlow(idToken.token);
     yield put(loginSuccessAction());

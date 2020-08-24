@@ -6,7 +6,7 @@ import { MenuItem, MenuListWrapper } from './styles';
 
 const MenuList = ({ email, fullName }) => {
   const displayName =
-    fullName && `${fullName}`.length > 0 ? `${fullName} 코치 어서 오세여` : '';
+    fullName && fullName.length > 0 ? `${fullName} 코치 어서 오세여` : '';
 
   return (
     <MenuListWrapper>

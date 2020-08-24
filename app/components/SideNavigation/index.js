@@ -9,13 +9,13 @@ import { RELEASE_VERSION } from 'utils/constants';
 import {
   makeSelectUserAccessGroup,
   makeSelectIdToken,
-  makeSelectPathName,
+  makeSelectPathname,
 } from 'containers/App/selectors';
 import { Wrapper } from './styles';
 import MenuList from './Menu/MenuList';
 
 const SideNavigation = ({ accessGroup, curPathname, idToken }) => {
-  console.log(accessGroup, idToken);
+  console.log(curPathname);
   return (
     <Wrapper>
       <MenuList
@@ -45,7 +45,7 @@ const SideNavigation = ({ accessGroup, curPathname, idToken }) => {
 
 const mapStateToProps = createStructuredSelector({
   accessGroup: makeSelectUserAccessGroup(),
-  curPathname: makeSelectPathName(),
+  curPathname: makeSelectPathname(),
   idToken: makeSelectIdToken(),
 });
 
