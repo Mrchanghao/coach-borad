@@ -33,6 +33,7 @@ import {
 } from './selectors';
 import ManageTypeTab from './ManageTypeTab';
 import ClassDropdown from './ClassDropdown';
+import LearningProgressManagement from './LearningProgressManagement';
 import {
   ClassManagementHeaderWrapper,
   ClassManagementWrapper,
@@ -77,29 +78,29 @@ const ClassManagementPage = ({
     setSelectedTypeName(_selectedTypeName);
   };
 
-  // const renderManageType = () => {
-  //   switch (match.params.manageType) {
-  //     case 'learning-progress':
-  //       return (
-  //         <LearningProgressManagement
-  //           selectedAlpsClass={selectedAlpsClass} // 선택 코스
-  //         />
-  //       );
-  //     case 'student':
-  //       return <StudentManagement selectedAlpsClass={selectedAlpsClass} />;
-  //     case 'submission':
-  //       return (
-  //         <SubmissionManagement
-  //           selectedAlpsClass={selectedAlpsClass} // 선택된 코스
-  //           selectedTypeKey="consult" // 제출은 상담/일지 탭으로 고정
-  //           location={location}
-  //           selectedTypeName={selectedTypeName} // 우측 선택탭 이름
-  //         />
-  //       );
-  //     default:
-  //       return <div />;
-  //   }
-  // };
+  const renderManageType = () => {
+    switch (match.params.manageType) {
+      case 'learning-progress':
+        return (
+          <LearningProgressManagement
+            selectedAlpsClass={selectedAlpsClass} // 선택 코스
+          />
+        );
+      // case 'student':
+      //   return <StudentManagement selectedAlpsClass={selectedAlpsClass} />;
+      // case 'submission':
+      //   return (
+      //     <SubmissionManagement
+      //       selectedAlpsClass={selectedAlpsClass} // 선택된 코스
+      //       selectedTypeKey="consult" // 제출은 상담/일지 탭으로 고정
+      //       location={location}
+      //       selectedTypeName={selectedTypeName} // 우측 선택탭 이름
+      //     />
+      //   );
+      default:
+        return <div />;
+    }
+  };
 
   return (
     <ClassManagementWrapper>
@@ -122,6 +123,7 @@ const ClassManagementPage = ({
         />
         {/* managetype tab 기본 셀렉트는 learning progress management */}
         {/* renderManageType 함수 실행 */}
+        {renderManageType()}
       </ClassManagementBodyWrapper>
     </ClassManagementWrapper>
   );
