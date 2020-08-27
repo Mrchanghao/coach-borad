@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   border-bottom: 2px solid ${props => props.theme.topNaviBorderColor};
   background: ${props => props.theme.topNaviBackgroundColor};
   top: 0;
+  left: 0;
   height: 80px;
   width: 100%;
   position: fixed;
@@ -42,4 +43,9 @@ export const LogoWrapper = styled.div`
   margin-left: 40px;
   cursor: pointer;
   align-items: center;
+`;
+export const LogoText = styled.h3`
+  margin-top: 0;
+  margin-left: 10px;
+  color: ${props => props.theme.grayColor};
 `;
