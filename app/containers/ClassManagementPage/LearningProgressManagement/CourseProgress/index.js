@@ -187,15 +187,66 @@ const CourseProgress = ({
           </TH>
         </CourseProgressTableHeaderWrapper>
         <CourseProgressTableBodyWrapper>
-          {courseProgressList.map(progress => {
-            console.log(progress);
-          })}
+          {courseProgressList.map(progress => (
+            <CourseProgressTableBodyRowWrapper key={progress.id}>
+              {/* 학생 이름 */}
+              <CourseProgressTableBodyRowNameWrapper id="825a448d6b3bad31439c4da961dcdc09">
+                {progress.full_name}
+              </CourseProgressTableBodyRowNameWrapper>
+              {/* 이메일 */}
+              <CourseProgressTableBodyRowEmailWrapper>
+                {progress.email}
+              </CourseProgressTableBodyRowEmailWrapper>
+              <div
+                style={{ padding: '10px 20px', textAlign: 'left', flex: 9 }}
+                colSpan={2}
+              >
+                {progress
+                  ? progress.course_progress.map(course => (
+                      <LearningProgressWrapper
+                        percent={course.progress}
+                        key={`progressBar=${course.id}`}
+                        id="cbb52dc168d928c2829294444a7f95c7"
+                        onClick={() =>
+                          handleCourseClick({
+                            userId: progress.id,
+                            courseId: course.id,
+                          })
+                        }
+                      >
+                        <CourseP>{course.title}</CourseP>
+                        <LearningProgressNum percent={course.progress}>
+                          {`${Math.floor(course.progress)}%`}
+                        </LearningProgressNum>
+                        <LearningProgress
+                          percent={course.progress}
+                          size="tiny"
+                          disabled={course.progress === 0}
+                        />
+                      </LearningProgressWrapper>
+                    ))
+                  : null}
+              </div>
+            </CourseProgressTableBodyRowWrapper>
+          ))}
         </CourseProgressTableBodyWrapper>
       </CourseProgressTableWrapper>
     );
   };
 
-  return <Wrapper />;
+  return (
+    <Wrapper>
+      <FilterWrapper>
+        <Dropdown
+          search
+          value={selectedCourseId}
+          selection
+          onChange={handleCourseDropdown}
+          options={courseList}
+        />
+      </FilterWrapper>
+    </Wrapper>
+  );
 };
 
 CourseProgress.propTypes = {
