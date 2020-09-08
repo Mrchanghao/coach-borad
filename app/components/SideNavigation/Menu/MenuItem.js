@@ -28,7 +28,6 @@ const MenuItem = ({
   ["/package", "/package", index: 0, input: "/package/blueimp-md5", groups: undefined]
   */
   const regExp = /(\/[-a-zA-Z0-9@:%._+~#=]*)/gm;
-  console.log(curPathname);
   const regMatch = regExp.exec(curPathname);
   const selected =
     regMatch && regMatch.length > 0

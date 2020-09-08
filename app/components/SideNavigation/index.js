@@ -14,34 +14,31 @@ import {
 import { Wrapper } from './styles';
 import MenuList from './Menu/MenuList';
 
-const SideNavigation = ({ accessGroup, curPathname, idToken }) => {
-  console.log(curPathname);
-  return (
-    <Wrapper>
-      <MenuList
-        accessGroup={accessGroup}
-        curPathname={curPathname}
-        idToken={idToken}
-      />
-      <div
-        style={{
-          display: 'flex',
-          marginBottom: 8,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          color: '#aaaaaa',
-          fontSize: '10px',
-        }}
-      >
-        <p style={{ margin: 0 }}>© Algorithm</p>
-        <p style={{ marginBottom: 5 }}>LABS</p>
-        <p>{RELEASE_VERSION}</p>
-      </div>
-    </Wrapper>
-  );
-};
+const SideNavigation = ({ accessGroup, curPathname, idToken }) => (
+  <Wrapper>
+    <MenuList
+      accessGroup={accessGroup}
+      curPathname={curPathname}
+      idToken={idToken}
+    />
+    <div
+      style={{
+        display: 'flex',
+        marginBottom: 8,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: '#aaaaaa',
+        fontSize: '10px',
+      }}
+    >
+      <p style={{ margin: 0 }}>© Algorithm</p>
+      <p style={{ marginBottom: 5 }}>LABS</p>
+      <p>{RELEASE_VERSION}</p>
+    </div>
+  </Wrapper>
+);
 
 const mapStateToProps = createStructuredSelector({
   accessGroup: makeSelectUserAccessGroup(),

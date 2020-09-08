@@ -7513,6 +7513,11 @@ mkpath@^0.1.0:
   resolved "https://registry.yarnpkg.com/mkpath/-/mkpath-0.1.0.tgz#7554a6f8d871834cc97b5462b122c4c124d6de91"
   integrity sha1-dVSm+Nhxg0zJe1RisSLEwSTW3pE=
 
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -8955,6 +8960,13 @@ raw-body@2.3.3:
     http-errors "1.6.3"
     iconv-lite "0.4.23"
     unpipe "1.0.0"
+
+react-activity@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-activity/-/react-activity-1.2.2.tgz#2afbcb78b9f5a1be9d725d06dcff6dbd83eb44ce"
+  integrity sha512-51E5FV1K7yUzSbeVq+wyApR8099ti3pcf8ol1WVRYXBhz0/TUYRQDrilxmxmD/oB6+vtpdXE2fEFCd5W6nIo2A==
+  dependencies:
+    prop-types "^15.6.1"
 
 react-app-polyfill@0.2.2:
   version "0.2.2"

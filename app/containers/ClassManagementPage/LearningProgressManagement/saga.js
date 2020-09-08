@@ -23,7 +23,7 @@ function* fetchCourseProgressSaga(action) {
   const { groupId, courseId, keyword, page } = action;
   try {
     let params = '?';
-    if (groupId) params = `${params}alps-group=${groupId}`;
+    if (groupId) params = `${params}alms-group=${groupId}`;
     if (courseId) params = `${params}&course=${courseId}`;
     if (keyword) {
       params = `${params}&search_keyword=${encodeURIComponent(keyword)}`;
@@ -42,7 +42,7 @@ function* fetchClassProgressCourseListSaga(action) {
 
   try {
     let params = '?';
-    if (groupId) params = `${params}alps-group=${groupId}`;
+    if (groupId) params = `${params}alms-group=${groupId}`;
     if (userId) params = `${params}&user_id=${userId}`;
     const url = `/course/title/${params}`;
     const courseList = yield call(getRequest, { url });
@@ -73,7 +73,7 @@ function* paginateCourseProgressSaga(action) {
     const prevCourseProgress = prevLearningProgress.courseProgress;
 
     let params = '?';
-    if (groupId) params = `${params}alps-group=${groupId}`;
+    if (groupId) params = `${params}alms-group=${groupId}`;
     if (courseId) params = `${params}&course=${courseId}`;
     if (keyword) {
       params = `${params}&search_keyword=${encodeURIComponent(keyword)}`;
@@ -98,15 +98,60 @@ function* paginateCourseProgressSaga(action) {
   }
 }
 
-function* fetchLevelProgressSaga(action) {}
+function* fetchLevelProgressSaga(action) {
+  const { userId, courseId } = action;
+  try {
+    let params = '?';
+    if (userId) params = `${params}user_id=${userId}`;
+    if (courseId) params = `${params}course_id=${courseId}`;
+    const url = `/learning-progress/student-section-progress/${params}`;
+
+    const result = yield call(getRequest, { url });
+    const transformedProgress = result.data.map(progress => ({
+      ...progress,
+      isOpen: false,
+      isProblem: true,
+      isVod: true,
+    }));
+    const final = { ...result, data: transformedProgress };
+    yield put({
+      type: FETCH_LEVEL_PROGRESS_SUCCESS,
+      levelProgress: final.data,
+      studentName: final.user.full_name,
+    });
+  } catch (error) {
+    yield put({ type: FETCH_LEVEL_PROGRESS_FAIL, error });
+  }
+}
+
+function* fetchUnitProgressSaga(action) {
+  const { userId, courseId, sectionId, isProblem, isVod } = action;
+  try {
+    let params = '?';
+    if (userId) params = `${params}user_id=${userId}`;
+    if (courseId) params = `${params}course_id=${courseId}`;
+    if (sectionId) params = `${params}section_id=${sectionId}`;
+    params = `${params}&is_pro=${isProblem}`;
+    params = `${params}&is_vod=${isVod}`;
+
+    const url = `/learning-progress/student-section-progress/architectures/${params}`;
+    const result = yield call(getRequest, { url });
+
+    yield put({ type: FETCH_UNIT_PROGRESS_SUCCESS, unitProgress: result.data });
+  } catch (error) {
+    yield put({ type: FETCH_UNIT_PROGRESS_FAIL, error });
+  }
+}
 
 export default function* rootSaga() {
   yield all([
-    takeLatest(FETCH_COURSE_PROGRESS_REQUEST, fetchCourseProgressSaga()),
+    takeLatest(FETCH_COURSE_PROGRESS_REQUEST, fetchCourseProgressSaga),
     takeLatest(
       FETCH_CLASS_PROGRESS_COURSE_LIST_REQUEST,
-      fetchClassProgressCourseListSaga(),
+      fetchClassProgressCourseListSaga,
     ),
-    takeLatest(PAGINATE_COURSE_PROGRESS_REQUEST, paginateCourseProgressSaga()),
+    takeLatest(PAGINATE_COURSE_PROGRESS_REQUEST, paginateCourseProgressSaga),
+    takeLatest(FETCH_LEVEL_PROGRESS_REQUEST, fetchLevelProgressSaga),
+    takeLatest(FETCH_UNIT_PROGRESS_REQUEST, fetchUnitProgressSaga),
   ]);
 }

@@ -18,7 +18,7 @@ import {
   makeSelectIdToken,
   makeSelectUserAccessGroup,
 } from 'containers/App/selectors';
-import { isEqual } from 'lodash/isEqual';
+import _ from 'lodash';
 import {
   fetchAlpsClassListRequestAction,
   fetchAlpsClassStudentListRequestionAction,
@@ -66,7 +66,7 @@ const ClassManagementPage = ({
   }, []);
 
   const onChangeSelectedAlpsClass = newAlpsClass => {
-    if (!isEqual(selectedAlpsClass, newAlpsClass)) {
+    if (!_.isEqual(selectedAlpsClass, newAlpsClass)) {
       const alpsClassId = newAlpsClass.id;
       fetchAlpsClassStudentList({ idToken, alpsClassId });
     }

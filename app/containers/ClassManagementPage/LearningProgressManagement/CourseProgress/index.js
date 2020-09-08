@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Dropdown, Input } from 'semantic-ui-react';
-// import { Spinner } from 'react-activity';
+import { Spinner } from 'react-activity';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -244,7 +244,31 @@ const CourseProgress = ({
           onChange={handleCourseDropdown}
           options={courseList}
         />
+        <div>
+          <RefreshIcon
+            refreshing={courseProgressLoading}
+            onClick={handleRefresh}
+          />
+
+          <Input
+            icon="search"
+            placeholder="학생 검색"
+            value={searchKeyword}
+            onChange={handleSearch}
+          />
+        </div>
       </FilterWrapper>
+      {renderTable()}
+      <TableFooter>
+        {courseProgressPaginating ? (
+          <LoadingWrapper>
+            <LoadingText>데이터 로딩</LoadingText>
+            <Spinner color="#a9a9a9" size={12} />
+          </LoadingWrapper>
+        ) : (
+          <div />
+        )}
+      </TableFooter>
     </Wrapper>
   );
 };

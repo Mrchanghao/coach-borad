@@ -28,9 +28,10 @@ const ClassDropdown = ({
       const initialAlpsClassName = alpsClassList[0].name;
       let initialClassId;
       if (classIdObj.classId) {
-        initialClassId = alpsClassList[0].id;
+        initialClassId = Number(alpsClassList[0].id);
       }
       selectNewClass(initialAlpsClassName, initialClassId);
+      console.log(classIdObj);
       // eslint-disable-next-line no-empty
     } catch (error) {}
 

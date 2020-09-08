@@ -19,7 +19,6 @@ export function* fetchAlpsClassListRequestSaga() {
       type: FETCH_ALPS_CLASS_LIST_SUCCESS,
       payload: { alpsClassList },
     });
-    console.log(alpsClassList);
   } catch (error) {
     yield put({ type: FETCH_ALPS_CLASS_LIST_FAIL, error: error.response });
   }
@@ -27,7 +26,7 @@ export function* fetchAlpsClassListRequestSaga() {
 
 export function* fetchAlpsClassStudentListRequestSaga(action) {
   const { alpsClassId } = action.payload;
-
+  console.log(alpsClassId);
   const url = `/account/students/?alms-class=${alpsClassId}`;
   try {
     let studentList = yield call(getRequest, { url });
