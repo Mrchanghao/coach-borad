@@ -74,21 +74,17 @@ const CourseProgress = ({
   // effect
   useEffect(() => {
     const { courseId } = parseSearch(window.location.search);
-
+    // 맨 처음 페이지 마운트시에는 아직 여기서 선택된 클래스가 null이기 때문에 진도율 불러오지 않는다.
+    // 하지만 이미 클래스가 선택된 상태에서 라우팅 할 시에는 진도율을 다시 불러와야 한다.
     if (selectedAlpsClass !== null) {
       const groupId = selectedAlpsClass.id || null;
       fetchClassProgressCourseList({ idToken, groupId });
-      fetchCourseProgress({
-        idToken,
-        groupId,
-        courseId: Number(courseId),
-      });
+      fetchCourseProgress({ idToken, groupId, courseId: Number(courseId) });
       if (courseId) {
         setSelectedCourseId(Number(courseId));
       }
     }
   }, []);
-
   useEffect(() => {
     const { courseId } = parseSearch(window.location.search);
     if (!selectedAlpsClass) return;
@@ -307,7 +303,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       fetchCourseProgressAction({ idToken, groupId, courseId, keyword }),
     ),
-  paginateCourseProgress: ({ idToken, groupId, courseId, page, keyword }) =>
+  paginateCourseProgress: ({ idToken, groupId, courseId, keyword }) =>
     dispatch(
       paginateCourseProgressAction({
         idToken,

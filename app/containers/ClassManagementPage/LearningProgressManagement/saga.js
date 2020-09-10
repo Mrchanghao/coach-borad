@@ -19,47 +19,61 @@ import {
 } from './constants';
 import { getRequest } from '../../../utils/request';
 
+// try {
+//   let params = '?';
+//   if (groupId) params = `${params}alms-group=${groupId}`;
+//   if (courseId) params = `${params}&course=${courseId}`;
+//   if (keyword) {
+//     params = `${params}&search_keyword=${encodeURIComponent(keyword)}`;
+//   }
+//   if (page) params = `${params}&page=${page}`;
+//   const url = `/learning-progress/student-course-progresses/${params}`;
+//   const courseProgress = yield call(getRequest, {
+//     url,
+//   });
+
 function* fetchCourseProgressSaga(action) {
   const { groupId, courseId, keyword, page } = action;
   try {
     let params = '?';
     if (groupId) params = `${params}alms-group=${groupId}`;
     if (courseId) params = `${params}&course=${courseId}`;
+
     if (keyword) {
       params = `${params}&search_keyword=${encodeURIComponent(keyword)}`;
     }
     if (page) params = `${params}&page=${page}`;
-    const url = `/learning-progress/student-course-progress/${params}`;
+    const url = `/learning-progress/student-course-progresses/${params}`;
     const courseProgress = yield call(getRequest, { url });
     yield put({ type: FETCH_COURSE_PROGRESS_SUCCESS, courseProgress });
   } catch (error) {
+    console.log(error, 'FETCH_COURSE_PROGRESS_FAIL');
     yield put({ type: FETCH_COURSE_PROGRESS_FAIL, error });
   }
 }
 
 function* fetchClassProgressCourseListSaga(action) {
   const { groupId, userId } = action;
-
   try {
     let params = '?';
     if (groupId) params = `${params}alms-group=${groupId}`;
     if (userId) params = `${params}&user_id=${userId}`;
-    const url = `/course/title/${params}`;
-    const courseList = yield call(getRequest, { url });
-
-    const initialCourse = [{ id: -1, value: -1, text: 'all' }];
-    const transformedCourse = courseList.map(course => ({
+    const url = `/courses/title/${params}`;
+    const courseList = yield call(getRequest, {
+      url,
+    });
+    const initial = [{ id: -1, value: -1, text: 'all' }];
+    const transfomed = courseList.map(course => ({
       id: course.id,
       value: course.id,
       text: course.title,
     }));
     yield put({
       type: FETCH_CLASS_PROGRESS_COURSE_LIST_SUCCESS,
-      courseList: userId
-        ? transformedCourse
-        : [...initialCourse, ...transformedCourse],
+      courseList: userId ? transfomed : [...initial, ...transfomed],
     });
   } catch (error) {
+    console.log(error, 'FETCH_CLASS_PROGRESS_COURSE_LIST_FAIL');
     yield put({ type: FETCH_CLASS_PROGRESS_COURSE_LIST_FAIL, error });
   }
 }
@@ -79,7 +93,7 @@ function* paginateCourseProgressSaga(action) {
       params = `${params}&search_keyword=${encodeURIComponent(keyword)}`;
     }
     if (page) params = `${params}&page=${page}`;
-    const url = `/learning-progress/student-course-progress/${params}`;
+    const url = `/learning-progress/student-course-progresses/${params}`;
 
     // 다움 페이지의 코스 진행률
     const courseProgress = yield call(getRequest, { url });
@@ -91,6 +105,7 @@ function* paginateCourseProgressSaga(action) {
       paging: courseProgress.paging,
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: PAGINATE_COURSE_PROGRESS_FAIL,
       error,
@@ -104,7 +119,7 @@ function* fetchLevelProgressSaga(action) {
     let params = '?';
     if (userId) params = `${params}user_id=${userId}`;
     if (courseId) params = `${params}course_id=${courseId}`;
-    const url = `/learning-progress/student-section-progress/${params}`;
+    const url = `/learning-progress/student-section-progresses/${params}`;
 
     const result = yield call(getRequest, { url });
     const transformedProgress = result.data.map(progress => ({
@@ -114,6 +129,7 @@ function* fetchLevelProgressSaga(action) {
       isVod: true,
     }));
     const final = { ...result, data: transformedProgress };
+    console.log(final);
     yield put({
       type: FETCH_LEVEL_PROGRESS_SUCCESS,
       levelProgress: final.data,
@@ -134,7 +150,7 @@ function* fetchUnitProgressSaga(action) {
     params = `${params}&is_pro=${isProblem}`;
     params = `${params}&is_vod=${isVod}`;
 
-    const url = `/learning-progress/student-section-progress/architectures/${params}`;
+    const url = `/learning-progress/student-section-progresses/architectures/${params}`;
     const result = yield call(getRequest, { url });
 
     yield put({ type: FETCH_UNIT_PROGRESS_SUCCESS, unitProgress: result.data });

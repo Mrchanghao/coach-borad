@@ -70,6 +70,7 @@ const ClassManagementPage = ({
       const alpsClassId = newAlpsClass.id;
       fetchAlpsClassStudentList({ idToken, alpsClassId });
     }
+
     setSelectedAlpsClass(newAlpsClass);
   };
 

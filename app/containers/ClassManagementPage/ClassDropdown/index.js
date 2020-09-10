@@ -26,12 +26,13 @@ const ClassDropdown = ({
     if (alpsClassList.length === 0) return;
     try {
       const initialAlpsClassName = alpsClassList[0].name;
-      let initialClassId;
+      let initialAlpsClassId;
       if (classIdObj.classId) {
-        initialClassId = Number(alpsClassList[0].id);
+        initialAlpsClassId = Number(classIdObj.id);
+      } else {
+        initialAlpsClassId = alpsClassList[0].id;
       }
-      selectNewClass(initialAlpsClassName, initialClassId);
-      console.log(classIdObj);
+      selectNewClass(initialAlpsClassName, initialAlpsClassId);
       // eslint-disable-next-line no-empty
     } catch (error) {}
 
@@ -58,6 +59,7 @@ const ClassDropdown = ({
       manageType === 'learning-progress' &&
       learningProgressType === 'level'
     ) {
+      console.log(match.url);
       push(`${match.url}/course/?classId=${newClassObj.id}`);
     } else {
       push(`${window.location.pathname}?classId=${newClassObj.id}`);

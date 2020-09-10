@@ -14,6 +14,7 @@ import saga from './saga';
 import reducer from './reducers';
 import { Wrapper, StepWrapper, StepItem, ArrowIcon } from './styles';
 import CourseProgress from './CourseProgress';
+import LevelProgress from './LevelProgress';
 
 const key = 'learningProgress';
 
@@ -42,6 +43,10 @@ const LearningProgressManagement = ({ match, selectedAlpsClass }) => {
           render={() => (
             <CourseProgress selectedAlpsClass={selectedAlpsClass} />
           )}
+        />
+        <Route
+          path={`${match.url}.level`}
+          render={() => <LevelProgress selectedAlpsClass={selectedAlpsClass} />}
         />
       </Switch>
     </Wrapper>
